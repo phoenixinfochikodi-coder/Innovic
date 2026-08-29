@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Innovic Solutions – Management Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary: #00ADE7;
+      --primary-dark: #0086C9;
+      --primary-light: #E8F7FD;
+      --primary-subtle: #F0FAFF;
+      --accent: #2563EB;
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --surface-subtle: #F1F5F9;
+      --border: #E2E8F0;
+      --border-light: #EEF2F6;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --success: #10B981;
+      --success-light: #ECFDF5;
+      --warning: #F59E0B;
+      --warning-light: #FFFBEB;
+      --danger: #EF4444;
+      --danger-light: #FEF2F2;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow: 0 4px 20px -2px rgba(0, 173, 231, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 12px 32px -4px rgba(0, 173, 231, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --tr: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.dark-mode {
+      --bg: #0B132B;
+      --surface: #1C2541;
+      --surface-subtle: #243054;
+      --border: #303E67;
+      --border-light: #2A375E;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary-light: rgba(0, 173, 231, 0.15);
+      --primary-subtle: rgba(0, 173, 231, 0.08);
+      --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .brand-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .brand-link span { color: var(--primary); }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px solid rgba(0, 173, 231, 0.2);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--tr);
+    }
+    .icon-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text);
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .user-name { font-size: 13px; font-weight: 600; }
+
+    /* LAYOUT */
+    .app-layout {
+      display: flex;
+      flex: 1;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 250px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: calc(100vh - 70px);
+    }
+    .nav-group-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 12px;
+      margin-bottom: 10px;
+    }
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      list-style: none;
+    }
+    .menu-item a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--tr);
+      cursor: pointer;
+    }
+    .menu-item a svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; flex-shrink: 0; }
+    .menu-item a:hover {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+    .menu-item.active a {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px rgba(0, 173, 231, 0.35);
+    }
+    .menu-item.active a svg { stroke: white; }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .signout-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--danger);
+      background: var(--danger-light);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--tr);
+    }
+    .signout-btn:hover { background: var(--danger); color: white; }
+    .signout-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex: 1;
+      padding: 28px 32px;
+      overflow-y: auto;
+      max-width: 1300px;
+    }
+
+    /* HEADER */
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .header-title-wrap h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+    .header-title-wrap h1 span { color: var(--primary); }
+    .header-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--success-light);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
+
+    /* 4-Stat Grid */
+    .stat-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--tr);
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+    .stat-meta .stat-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .stat-meta .stat-val {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stat-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    /* ====================================================
+       CIRCULAR / SQUIRCLE HERO ATTENDANCE DIAL CARD
+       ==================================================== */
+    .attendance-hero-box {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--primary-subtle) 100%);
+      border: 1.5px solid rgba(0, 173, 231, 0.25);
+      border-radius: 24px;
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .attendance-hero-box::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 173, 231, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .att-left-content {
+      max-width: 520px;
+    }
+    .att-left-content .att-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .att-left-content h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .att-left-content h2 span { color: var(--primary); }
+    .att-left-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .att-live-clock {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-top: 12px;
+    }
+
+    /* THE ROUND / CIRCULAR PUNCH DIAL */
+    .punch-dial-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .round-punch-btn {
+      width: 136px;
+      height: 136px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: 5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(0, 173, 231, 0.4), 0 0 0 8px rgba(0, 173, 231, 0.15);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      user-select: none;
+      position: relative;
+    }
+    .round-punch-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 14px 40px rgba(0, 173, 231, 0.55), 0 0 0 12px rgba(0, 173, 231, 0.2);
+    }
+    .round-punch-btn:active {
+      transform: scale(0.94);
+    }
+    .round-punch-btn svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 2.2; margin-bottom: 4px; }
+    .round-punch-btn .dial-label {
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* ROUND PUNCH STATES */
+    .round-punch-btn.punched-in-state {
+      background: linear-gradient(135deg, #10B981, #059669);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4), 0 0 0 8px rgba(16, 185, 129, 0.15);
+    }
+    .round-punch-btn.punched-in-state:hover {
+      box-shadow: 0 14px 40px rgba(16, 185, 129, 0.55), 0 0 0 12px rgba(16, 185, 129, 0.2);
+    }
+    .round-punch-btn.punched-out-state {
+      background: linear-gradient(135deg, #EF4444, #DC2626);
+      box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4), 0 0 0 8px rgba(239, 68, 68, 0.15);
+    }
+
+    .dial-sub-status {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Visual Grid */
+    .dashboard-visual-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+    .visual-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Tables */
+    .data-table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .table-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .table-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    .custom-table th {
+      background: var(--bg);
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 12px 20px;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    .custom-table td {
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text);
+    }
+    .custom-table tr:hover td { background: var(--primary-subtle); }
+
+    /* Progress bars */
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      border-radius: 100px;
+    }
+
+    /* Student pillars */
+    .student-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .pillar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--tr);
+    }
+    .pillar-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: var(--shadow-lg); }
+    .pillar-val { font-size: 30px; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 4px; }
+    .pillar-val.success { color: var(--success); }
+    .pillar-val.neutral { color: var(--text); }
+    .pillar-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.06em; }
+    .pillar-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    .action-pill-btn {
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--tr);
+    }
+    .action-pill-btn:hover { background: var(--primary-dark); }
+
+    /* Toast Notification */
+    .toast-box {
+      position: fixed; bottom: 24px; right: 24px; z-index: 1100;
+      background: var(--text); color: white;
+      padding: 14px 22px; border-radius: 100px;
+      font-size: 14px; font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      display: none; align-items: center; gap: 10px;
+    }
+    .toast-box.show { display: flex; animation: fadeIn 0.3s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .stat-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .dashboard-visual-grid { grid-template-columns: 1fr; }
+      .student-pillars { grid-template-columns: 1fr; }
+      .attendance-hero-box { flex-direction: column; align-items: center; text-align: center; }
+      .att-left-content { text-align: center; }
+      .att-live-clock { justify-content: center; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .stat-grid-4 { grid-template-columns: 1fr; }
+      .main-content { padding: 18px 14px; }
+      .topbar { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="brand-link">
+        <img src="images/logo.png" alt="Innovic Solutions" style="height:38px;width:auto;display:block;" />
+      </a>
+      <div class="role-badge" id="currentRoleBadge">Admin Command Center</div>
+    </div>
+
+    <div class="topbar-right">
+      <button class="icon-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+
+      <div class="user-pill">
+        <div class="user-avatar" id="avatarText">PA</div>
+        <span class="user-name" id="userNameText">Phoenix Admin</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- APP LAYOUT -->
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <div class="nav-group-title">Menu Options</div>
+        <ul class="sidebar-menu" id="sidebarMenu">
+          <!-- Dynamically populated from JS -->
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="login.html" class="signout-btn">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CANVAS -->
+    <main class="main-content" id="mainCanvas">
+      <!-- Active tab content inserted dynamically -->
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-box" id="toast">
+    <span id="toastMsg">✓ Operation successful</span>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const userRole = urlParams.get('role') || 'admin';
+
+    // Sidebar Menus Configuration per Role
+    const roleMeta = {
+      admin: {
+        badge: '⚡ Admin Command Center',
+        userName: 'Phoenix Admin',
+        avatar: 'PA',
+        menu: [
+          { id: 'dashboard', name: 'Dashboard', icon: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z' },
+          { id: 'students', name: 'Students Directory', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z' },
+          { id: 'staff', name: 'Staff Management', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
+          { id: 'attendance', name: 'Attendance Records', icon: 'M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3' },
+          { id: 'batch', name: 'Batch Schedules', icon: 'M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' },
+          { id: 'exams', name: 'Exams & Results', icon: 'M12 8a7 7 0 1 0 0 14 7 7 0 0 0 0-14z' },
+          { id: 'syllabus', name: 'Syllabus Builder', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20' },
+          { id: 'enquiries', name: 'Enquiries & Leads', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
+          { id: 'finance', name: 'Finance & Invoices', icon: 'M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' },
+          { id: 'tasks', name: 'Tasks & Reports', icon: 'M18 20V10M12 20V4M6 20v-6' }
+        ]
+      },
+      staff: {
+        badge: '👩‍🏫 Staff Portal',
+        userName: 'Suprita Kalasannavar',
+        avatar: 'SK',
+        menu: [
+          { id: 'dashboard', name: 'Dashboard', icon: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z' },
+          { id: 'students', name: 'Student Directory', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2' },
+          { id: 'attendance', name: 'My Attendance Logs', icon: 'M22 11.08V12a10 10 0 1 1-5.93-9.14' },
+          { id: 'tasks', name: 'Pending Tasks (21)', icon: 'M9 11l3 3L22 4' },
+          { id: 'enquiries', name: 'Track Enquiries', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5' },
+          { id: 'exams', name: 'Exam Scheduling', icon: 'M12 8a7 7 0 1 0 0 14' },
+          { id: 'syllabus', name: 'Syllabus Progress', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20' },
+          { id: 'feedback', name: 'Student Feedback', icon: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7' }
+        ]
+      },
+      student: {
+        badge: '👨‍🎓 Student Portal',
+        userName: 'Subhash Chougale',
+        avatar: 'SC',
+        menu: [
+          { id: 'dashboard', name: 'Dashboard', icon: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z' },
+          { id: 'attendance', name: 'My Attendance Logs', icon: 'M22 11.08V12a10 10 0 1 1-5.93-9.14' },
+          { id: 'exams', name: 'Exams & Results', icon: 'M12 8a7 7 0 1 0 0 14' },
+          { id: 'fees', name: 'Fee Receipts', icon: 'M1 4h22v16H1z' },
+          { id: 'syllabus', name: 'My Syllabus', icon: 'M8 6h13M8 12h13M8 18h13' },
+          { id: 'notes', name: 'Study Notes & PDFs', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20' },
+          { id: 'feedback', name: 'Trainer Feedback', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5' }
+        ]
+      }
+    };
+
+    // State Variables
+    let staffPunched = true;
+    let studentAttMarked = false;
+
+    // Live Clock Updater
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const dateStr = now.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+      
+      const clockEl = document.getElementById('liveClockText');
+      if (clockEl) clockEl.textContent = `${dateStr} • ${timeStr}`;
+    }
+    setInterval(updateClock, 1000);
+
+    // Render Tab Views
+    function renderView(tabId = 'dashboard') {
+      const main = document.getElementById('mainCanvas');
+
+      /* ==================================================
+         1. ADMIN VIEWS
+         ================================================== */
+      if (userRole === 'admin') {
+        if (tabId === 'dashboard') {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <span style="font-size:11.5px;font-weight:700;letter-spacing:0.08em;color:var(--primary);text-transform:uppercase;">Innovic Solutions Belgaum</span>
+                <h1>Admin <span>Command Center</span></h1>
+                <p class="header-subtitle">Welcome back, Admin. Here is your institutional overview.</p>
+              </div>
+              <div class="status-pill">
+                <div class="status-dot"></div>
+                All Systems Active
+              </div>
+            </div>
+
+            <div class="stat-grid-4">
+              <div class="stat-card" style="cursor:pointer;" onclick="selectTab('students')">
+                <div class="stat-meta">
+                  <div class="stat-label">Total Students</div>
+                  <div class="stat-val">129</div>
+                </div>
+                <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+              </div>
+              <div class="stat-card" style="cursor:pointer;" onclick="selectTab('staff')">
+                <div class="stat-meta">
+                  <div class="stat-label">Active Staff</div>
+                  <div class="stat-val">4</div>
+                </div>
+                <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+              </div>
+              <div class="stat-card" style="cursor:pointer;" onclick="selectTab('syllabus')">
+                <div class="stat-meta">
+                  <div class="stat-label">Total Courses</div>
+                  <div class="stat-val">17</div>
+                </div>
+                <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></div>
+              </div>
+              <div class="stat-card" style="cursor:pointer;" onclick="selectTab('enquiries')">
+                <div class="stat-meta">
+                  <div class="stat-label">Active Enquiries</div>
+                  <div class="stat-val">96</div>
+                </div>
+                <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+              </div>
+            </div>
+
+            <div class="dashboard-visual-grid">
+              <div class="visual-card">
+                <div class="card-head">
+                  <div class="card-title">Live Batches in Session Today</div>
+                  <button class="action-pill-btn" onclick="selectTab('batch')">View Full Schedule →</button>
+                </div>
+                <table class="custom-table">
+                  <thead><tr><th>Batch / Module</th><th>Trainer</th><th>Time</th><th>Room</th><th>Attendance</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>SAP FICO (Batch A)</strong></td><td>Suprita K.</td><td>09:00 AM - 11:00 AM</td><td>Lab 1 (Live Server)</td><td><span style="color:var(--success);font-weight:700;">92%</span></td></tr>
+                    <tr><td><strong>SAP HCM Masterclass</strong></td><td>Anand R.</td><td>11:30 AM - 01:30 PM</td><td>Lab 2</td><td><span style="color:var(--success);font-weight:700;">88%</span></td></tr>
+                    <tr><td><strong>SAP MM / SD Fastrack</strong></td><td>Ramesh P.</td><td>04:00 PM - 06:00 PM</td><td>Lab 1</td><td><span style="color:var(--primary);font-weight:700;">85%</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="visual-card">
+                <div class="card-head">
+                  <div class="card-title">Institution Metrics</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:18px;">
+                  <div>
+                    <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;margin-bottom:6px;">
+                      <span>Student Attendance Avg</span>
+                      <span style="color:var(--success)">89.4%</span>
+                    </div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:89.4%;"></div></div>
+                  </div>
+                  <div>
+                    <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;margin-bottom:6px;">
+                      <span>Fee Collection Clearance</span>
+                      <span style="color:var(--primary)">96.2%</span>
+                    </div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:96.2%;"></div></div>
+                  </div>
+                  <div>
+                    <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;margin-bottom:6px;">
+                      <span>Placement Guarantee Rate</span>
+                      <span style="color:var(--success)">100%</span>
+                    </div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (tabId === 'students') {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <h1>Students <span>Directory</span></h1>
+                <p class="header-subtitle">129 Enrolled Students across all SAP Modules</p>
+              </div>
+              <button class="action-pill-btn">+ Enroll New Student</button>
+            </div>
+            <div class="data-table-card">
+              <table class="custom-table">
+                <thead><tr><th>Student ID</th><th>Student Name</th><th>SAP Module</th><th>Batch Time</th><th>Attendance</th><th>Fee Status</th></tr></thead>
+                <tbody>
+                  <tr><td>INV-2026-01</td><td><strong>Subhash Chougale</strong></td><td>SAP FICO</td><td>Morning (09:00 AM)</td><td><span style="color:var(--success);font-weight:700;">87%</span></td><td><span class="status-pill" style="padding:2px 10px;">Paid ✓</span></td></tr>
+                  <tr><td>INV-2026-02</td><td><strong>Aditya Deshmukh</strong></td><td>SAP HCM</td><td>Evening (05:00 PM)</td><td><span style="color:var(--success);font-weight:700;">94%</span></td><td><span class="status-pill" style="padding:2px 10px;">Paid ✓</span></td></tr>
+                  <tr><td>INV-2026-03</td><td><strong>Pooja Patil</strong></td><td>SAP MM / SD</td><td>Weekend Batch</td><td><span style="color:var(--primary);font-weight:700;">82%</span></td><td><span class="status-pill" style="padding:2px 10px;">Paid ✓</span></td></tr>
+                  <tr><td>INV-2026-04</td><td><strong>Rahul Kulkarni</strong></td><td>SAP BASIS</td><td>Morning (11:00 AM)</td><td><span style="color:var(--success);font-weight:700;">90%</span></td><td><span class="status-pill" style="padding:2px 10px;">Paid ✓</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        } else if (tabId === 'staff') {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <h1>Staff <span>Management</span></h1>
+                <p class="header-subtitle">4 Certified SAP Corporate Instructors</p>
+              </div>
+              <button class="action-pill-btn">+ Add New Staff</button>
+            </div>
+            <div class="data-table-card">
+              <table class="custom-table">
+                <thead><tr><th>Instructor</th><th>Specialization</th><th>Active Batches</th><th>Shift Timing</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Suprita Kalasannavar</strong></td><td>SAP FICO & S/4HANA</td><td>3 Batches (63 Students)</td><td>08:30 AM - 04:30 PM</td><td><span class="status-pill" style="padding:2px 10px;">On Floor ✓</span></td></tr>
+                  <tr><td><strong>Anand Rao</strong></td><td>SAP HCM / Payroll</td><td>2 Batches (42 Students)</td><td>10:00 AM - 06:00 PM</td><td><span class="status-pill" style="padding:2px 10px;">On Floor ✓</span></td></tr>
+                  <tr><td><strong>Ramesh Patil</strong></td><td>SAP MM / SD Logistics</td><td>2 Batches (24 Students)</td><td>02:00 PM - 08:00 PM</td><td><span class="status-pill" style="padding:2px 10px;">On Floor ✓</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        } else {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <h1>${tabId.toUpperCase()} <span>Module</span></h1>
+                <p class="header-subtitle">Viewing live data records</p>
+              </div>
+            </div>
+            <div class="data-table-card" style="padding:32px;"><p style="color:var(--text-muted);font-size:14px;">All records for <strong>${tabId}</strong> are active.</p></div>
+          `;
+        }
+      }
+
+      /* ==================================================
+         2. STAFF VIEWS (ROUND PUNCH DIAL BUTTON)
+         ================================================== */
+      else if (userRole === 'staff') {
+        if (tabId === 'dashboard') {
+          main.innerHTML = `
+            <!-- ROUND / CIRCULAR STAFF ATTENDANCE HERO DIAL -->
+            <div class="attendance-hero-box">
+              <div class="att-left-content">
+                <div class="att-badge">📍 Staff Shift Attendance</div>
+                <h2>Good day, <span>Suprita Kalasannavar</span> 👋</h2>
+                <div class="att-live-clock">
+                  <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span id="liveClockText">Loading time...</span>
+                </div>
+              </div>
+
+              <!-- CIRCULAR PUNCH BUTTON -->
+              <div class="punch-dial-wrapper">
+                <div class="round-punch-btn ${staffPunched ? 'punched-in-state' : 'punched-out-state'}" id="staffRoundBtn" onclick="handleStaffRoundPunch()">
+                  <svg viewBox="0 0 24 24"><path d="M12 2v10M18.36 6.64a9 9 0 1 1-12.73 0"></path></svg>
+                  <span class="dial-label" id="staffRoundLabel">${staffPunched ? 'PUNCH OUT' : 'PUNCH IN'}</span>
+                </div>
+                <div class="dial-sub-status" id="staffRoundSub">${staffPunched ? '✓ Active (09:15 AM)' : '○ Currently Out'}</div>
+              </div>
+            </div>
+
+            <!-- Staff 3 Top Metrics -->
+            <div class="stat-grid-4" style="grid-template-columns: repeat(3, 1fr);">
+              <div class="stat-card" style="cursor:pointer;" onclick="selectTab('students')">
+                <div class="stat-meta">
+                  <div class="stat-label">Assigned Students</div>
+                  <div class="stat-val">63</div>
+                </div>
+                <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+              </div>
+              <div class="stat-card" style="cursor:pointer;" onclick="selectTab('tasks')">
+                <div class="stat-meta">
+                  <div class="stat-label">Pending Tasks</div>
+                  <div class="stat-val">21</div>
+                </div>
+                <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path></svg></div>
+              </div>
+              <div class="stat-card" style="cursor:pointer;" onclick="selectTab('enquiries')">
+                <div class="stat-meta">
+                  <div class="stat-label">Pending Follow-ups</div>
+                  <div class="stat-val">58</div>
+                </div>
+                <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2"></path></svg></div>
+              </div>
+            </div>
+
+            <!-- Staff Today's Classes -->
+            <div class="visual-card">
+              <div class="card-head">
+                <div class="card-title">My Live Lectures Today</div>
+              </div>
+              <table class="custom-table">
+                <thead><tr><th>Batch</th><th>Topic</th><th>Time</th><th>Room</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>SAP FICO Batch A</strong></td><td>Unit 3: Asset Accounting & Live Server Labs</td><td>09:00 AM - 11:00 AM</td><td>Lab 1</td><td><span class="status-pill" style="padding:2px 10px;">In Progress</span></td></tr>
+                  <tr><td><strong>SAP S/4HANA Masterclass</strong></td><td>Real-time Financial Migration & Fiori UX</td><td>02:00 PM - 04:00 PM</td><td>Lab 2</td><td><span class="status-pill" style="padding:2px 10px;background:var(--primary-light);color:var(--primary-dark);">Upcoming</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+          updateClock();
+        } else if (tabId === 'students') {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <h1>Student <span>Directory</span></h1>
+                <p class="header-subtitle">63 Trainees enrolled across your SAP Batches</p>
+              </div>
+            </div>
+            <div class="data-table-card">
+              <table class="custom-table">
+                <thead><tr><th>Student Name</th><th>Batch</th><th>Attendance %</th><th>Lab Work</th><th>Actions</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Subhash Chougale</strong></td><td>SAP FICO Batch A</td><td><span style="color:var(--success);font-weight:700;">87%</span></td><td><span class="status-pill" style="padding:2px 10px;">Completed ✓</span></td><td><button class="action-pill-btn">Mark Score</button></td></tr>
+                  <tr><td><strong>Pooja Patil</strong></td><td>SAP FICO Batch A</td><td><span style="color:var(--success);font-weight:700;">94%</span></td><td><span class="status-pill" style="padding:2px 10px;">Completed ✓</span></td><td><button class="action-pill-btn">Mark Score</button></td></tr>
+                  <tr><td><strong>Rahul Kulkarni</strong></td><td>SAP S/4HANA</td><td><span style="color:var(--primary);font-weight:700;">82%</span></td><td><span class="status-pill" style="padding:2px 10px;background:var(--warning-light);color:var(--warning);">In Review</span></td><td><button class="action-pill-btn">Mark Score</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        } else {
+          main.innerHTML = `
+            <div class="dashboard-header"><div class="header-title-wrap"><h1>${tabId.toUpperCase()}</h1></div></div>
+            <div class="data-table-card" style="padding:32px;"><p style="color:var(--text-muted);font-size:14px;">All records for <strong>${tabId}</strong> are loaded.</p></div>
+          `;
+        }
+      }
+
+      /* ==================================================
+         3. STUDENT VIEWS (ROUND ATTENDANCE DIAL BUTTON)
+         ================================================== */
+      else if (userRole === 'student') {
+        if (tabId === 'dashboard') {
+          main.innerHTML = `
+            <!-- ROUND / CIRCULAR STUDENT ATTENDANCE HERO DIAL -->
+            <div class="attendance-hero-box">
+              <div class="att-left-content">
+                <div class="att-badge">🎓 Student Attendance</div>
+                <h2>Hey, <span>Subhash Chougale</span> 👋</h2>
+                <div class="att-live-clock">
+                  <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span id="liveClockText">Loading time...</span>
+                </div>
+              </div>
+
+              <!-- CIRCULAR STUDENT CHECK-IN DIAL -->
+              <div class="punch-dial-wrapper">
+                <div class="round-punch-btn ${studentAttMarked ? 'punched-in-state' : ''}" id="studentRoundBtn" onclick="handleStudentRoundAtt()">
+                  <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <span class="dial-label" id="studentRoundLabel">${studentAttMarked ? 'PRESENT ✓' : 'TAP TO MARK'}</span>
+                </div>
+                <div class="dial-sub-status" id="studentRoundSub">${studentAttMarked ? '✓ Logged Today (09:30 AM)' : '✋ Touch to Mark Present'}</div>
+              </div>
+            </div>
+
+            <!-- Student 3 Visual KPI Pillars -->
+            <div class="student-pillars">
+              <div class="pillar-card" style="cursor:pointer;" onclick="selectTab('attendance')">
+                <div class="pillar-val" id="studentAttRateText">${studentAttMarked ? '90%' : '87%'}</div>
+                <div class="pillar-label">Attendance Rate</div>
+                <div class="pillar-sub">${studentAttMarked ? 'Marked for today • Excellent' : '4 classes absent • Above target'}</div>
+              </div>
+
+              <div class="pillar-card" style="cursor:pointer;" onclick="selectTab('fees')">
+                <div class="pillar-val success">Paid ✓</div>
+                <div class="pillar-label">Fee Status</div>
+                <div class="pillar-sub">All clear • No pending dues</div>
+              </div>
+
+              <div class="pillar-card" style="cursor:pointer;" onclick="selectTab('exams')">
+                <div class="pillar-val neutral">0</div>
+                <div class="pillar-label">Exams Pending</div>
+                <div class="pillar-sub">1 upcoming mock scheduled</div>
+              </div>
+            </div>
+
+            <!-- Current Course Progress Overview -->
+            <div class="visual-card">
+              <div class="card-head">
+                <div class="card-title">SAP FICO Masterclass Progress</div>
+                <button class="action-pill-btn" onclick="selectTab('syllabus')">View Detailed Syllabus →</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:16px;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px;">
+                    <span>Unit 1: General Ledger Accounting</span>
+                    <span style="color:var(--success)">100% Completed</span>
+                  </div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px;">
+                    <span>Unit 2: Accounts Payable & Receivable</span>
+                    <span style="color:var(--success)">100% Completed</span>
+                  </div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px;">
+                    <span>Unit 3: Asset Accounting & Live Server Labs</span>
+                    <span style="color:var(--primary)">60% In Progress</span>
+                  </div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%;"></div></div>
+                </div>
+              </div>
+            </div>
+          `;
+          updateClock();
+        } else if (tabId === 'syllabus') {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <h1>My <span>Syllabus Curriculum</span></h1>
+                <p class="header-subtitle">SAP FICO Module Pacing & Practical Topics</p>
+              </div>
+            </div>
+            <div class="data-table-card" style="padding:24px;">
+              <div style="display:flex;flex-direction:column;gap:20px;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-bottom:6px;">
+                    <span>Unit 1: General Ledger Accounting</span>
+                    <span style="color:var(--success);">100% Completed</span>
+                  </div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;"></div></div>
+                </div>
+
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-bottom:6px;">
+                    <span>Unit 2: Accounts Payable & Receivable</span>
+                    <span style="color:var(--success);">100% Completed</span>
+                  </div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;"></div></div>
+                </div>
+
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-bottom:6px;">
+                    <span>Unit 3: Asset Accounting & Live Server Labs</span>
+                    <span style="color:var(--primary);">60% In Progress</span>
+                  </div>
+                  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%;"></div></div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (tabId === 'notes') {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <h1>Study <span>Notes & Materials</span></h1>
+                <p class="header-subtitle">Download official SAP textbooks & cheatsheets</p>
+              </div>
+            </div>
+            <div class="data-table-card">
+              <table class="custom-table">
+                <thead><tr><th>Document Name</th><th>File Type</th><th>Size</th><th>Action</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>SAP FICO Comprehensive Configuration Guide</strong></td><td>PDF Document</td><td>12.4 MB</td><td><button class="action-pill-btn" onclick="showToast('📥 Downloading PDF...')">📥 Download</button></td></tr>
+                  <tr><td><strong>Real-Time SAP T-Codes Cheatsheet (2026 Edition)</strong></td><td>PDF Document</td><td>3.1 MB</td><td><button class="action-pill-btn" onclick="showToast('📥 Downloading PDF...')">📥 Download</button></td></tr>
+                  <tr><td><strong>Live Server Lab Credentials & Connection Guide</strong></td><td>PDF Document</td><td>1.2 MB</td><td><button class="action-pill-btn" onclick="showToast('📥 Downloading PDF...')">📥 Download</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        } else if (tabId === 'fees') {
+          main.innerHTML = `
+            <div class="dashboard-header">
+              <div class="header-title-wrap">
+                <h1>Fee Receipts & <span>Invoices</span></h1>
+                <p class="header-subtitle">Account Balance: ₹0.00 (All Clear ✓)</p>
+              </div>
+            </div>
+            <div class="data-table-card">
+              <table class="custom-table">
+                <thead><tr><th>Receipt #</th><th>Course</th><th>Amount Paid</th><th>Date</th><th>Tax Invoice</th></tr></thead>
+                <tbody>
+                  <tr><td>#INV-8821</td><td>SAP FICO Professional Masterclass</td><td>₹35,000</td><td>25 Aug 2026</td><td><button class="action-pill-btn" onclick="showToast('📄 Tax invoice PDF downloaded.')">📄 Download PDF</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        } else {
+          main.innerHTML = `
+            <div class="dashboard-header"><div class="header-title-wrap"><h1>${tabId.toUpperCase()}</h1></div></div>
+            <div class="data-table-card" style="padding:32px;"><p style="color:var(--text-muted);font-size:14px;">All records for <strong>${tabId}</strong> are loaded.</p></div>
+          `;
+        }
+      }
+    }
+
+    // ROUND PUNCH & ATTENDANCE HANDLERS
+    function handleStaffRoundPunch() {
+      staffPunched = !staffPunched;
+      const btn = document.getElementById('staffRoundBtn');
+      const label = document.getElementById('staffRoundLabel');
+      const sub = document.getElementById('staffRoundSub');
+      if (staffPunched) {
+        btn.className = 'round-punch-btn punched-in-state';
+        label.textContent = 'PUNCH OUT';
+        sub.textContent = '✓ Punched In (Just Now)';
+        showToast('✓ Staff attendance recorded: Punched In!');
+      } else {
+        btn.className = 'round-punch-btn punched-out-state';
+        label.textContent = 'PUNCH IN';
+        sub.textContent = '○ Currently Punched Out';
+        showToast('○ Staff attendance recorded: Punched Out.');
+      }
+    }
+
+    function handleStudentRoundAtt() {
+      if (!studentAttMarked) {
+        studentAttMarked = true;
+        const btn = document.getElementById('studentRoundBtn');
+        const label = document.getElementById('studentRoundLabel');
+        const sub = document.getElementById('studentRoundSub');
+        const rate = document.getElementById('studentAttRateText');
+        btn.className = 'round-punch-btn punched-in-state';
+        label.textContent = 'PRESENT ✓';
+        sub.textContent = '✓ Logged Today (Present)';
+        if (rate) rate.textContent = '90%';
+        showToast('🎉 Excellent! Your attendance for today has been marked present.');
+      } else {
+        showToast('✓ Attendance is already marked present for today.');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // Setup Sidebar Menu
+    function setupSidebar() {
+      const cfg = roleMeta[userRole] || roleMeta['admin'];
+      document.getElementById('currentRoleBadge').textContent = cfg.badge;
+      document.getElementById('userNameText').textContent = cfg.userName;
+      document.getElementById('avatarText').textContent = cfg.avatar;
+
+      const menuEl = document.getElementById('sidebarMenu');
+      menuEl.innerHTML = '';
+
+      cfg.menu.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = `menu-item ${index === 0 ? 'active' : ''}`;
+        li.setAttribute('data-tab', item.id);
+        li.innerHTML = `
+          <a onclick="selectTab('${item.id}')">
+            <svg viewBox="0 0 24 24"><path d="${item.icon}"></path></svg>
+            <span>${item.name}</span>
+          </a>
+        `;
+        menuEl.appendChild(li);
+      });
+    }
+
+    function selectTab(tabId) {
+      document.querySelectorAll('.menu-item').forEach(m => {
+        m.classList.toggle('active', m.getAttribute('data-tab') === tabId);
+      });
+      renderView(tabId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setupSidebar();
+      renderView('dashboard');
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+  </script>
+</body>
+</html>

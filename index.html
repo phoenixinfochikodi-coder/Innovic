@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Innovic Solutions – Build Skills. Get Hired. Lead with SAP.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--blue:#00ADE7;--blue-deep:#0086C9;--blue-light:#E8F7FD;--blue-mid:#B3E6F8;--white:#FFF;--g50:#F8FAFC;--g100:#F1F5F9;--g200:#E2E8F0;--g400:#94A3B8;--g600:#475569;--g800:#1E293B;--g900:#0F172A;--font:'Inter',sans-serif;--r:16px;--rs:8px;--sh:0 4px 24px rgba(0,173,231,.1);--shl:0 8px 48px rgba(0,173,231,.16);--tr:.3s cubic-bezier(.4,0,.2,1)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font);color:var(--g800);background:var(--white);line-height:1.6;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    ul{list-style:none}
+    button{cursor:pointer;font-family:var(--font);border:none;outline:none}
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
+    .sec{padding:96px 0}
+    .badge{display:inline-flex;align-items:center;gap:6px;background:var(--blue-light);color:var(--blue-deep);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:100px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-size:15px;font-weight:600;transition:var(--tr);white-space:nowrap;cursor:pointer}
+    .btn-p{background:var(--blue);color:#fff;box-shadow:0 4px 16px rgba(0,173,231,.35)}
+    .btn-p:hover{background:var(--blue-deep);box-shadow:0 6px 24px rgba(0,173,231,.45);transform:translateY(-1px)}
+    .btn-o{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+    .btn-o:hover{background:var(--blue-light)}
+    .btn-w{background:#fff;color:var(--blue)}
+    .btn-w:hover{background:var(--blue-light)}
+    .h1{font-size:clamp(36px,5vw,62px);font-weight:800;line-height:1.1;letter-spacing:-2px}
+    .h2{font-size:clamp(26px,4vw,46px);font-weight:800;line-height:1.15;letter-spacing:-1.5px}
+    .h3{font-size:19px;font-weight:700;line-height:1.3}
+    .h4{font-size:16px;font-weight:600}
+    .lead{font-size:17px;color:var(--g600);line-height:1.75}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.93);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--g200);transition:var(--tr)}
+    .nav.sc{box-shadow:0 4px 24px rgba(0,0,0,.08)}
+    .nav-i{display:flex;align-items:center;justify-content:space-between;height:72px}
+    .n-logo{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:800;color:var(--g900)}
+    .n-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--blue),var(--blue-deep));border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .n-icon svg{width:22px;height:22px;fill:#fff}
+    .n-span{color:var(--blue)}
+    .n-links{display:flex;align-items:center;gap:4px}
+    .n-link{padding:8px 16px;border-radius:100px;font-size:14px;font-weight:500;color:var(--g600);transition:var(--tr)}
+    .n-link:hover,.n-link.act{background:var(--blue-light);color:var(--blue);font-weight:600}
+    .n-cta{padding:10px 22px;border-radius:100px;font-size:14px;font-weight:600;background:var(--blue);color:#fff;transition:var(--tr);box-shadow:0 2px 12px rgba(0,173,231,.3)}
+    .n-cta:hover{background:var(--blue-deep);transform:translateY(-1px)}
+    .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+    .ham span{width:24px;height:2px;background:var(--g800);border-radius:2px;transition:var(--tr);display:block}
+    .ham.op span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .ham.op span:nth-child(2){opacity:0}
+    .ham.op span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .m-menu{display:none;flex-direction:column;gap:4px;padding:16px 24px 24px;background:#fff;border-top:1px solid var(--g200)}
+    .m-menu.op{display:flex}
+    .m-menu a{padding:12px 16px;border-radius:12px;font-weight:500;color:var(--g600)}
+    .m-menu a:hover{background:var(--blue-light);color:var(--blue)}
+
+    /* HERO */
+    .hero{padding-top:100px;min-height:100vh;background:linear-gradient(135deg,#FAFEFF,var(--blue-light) 50%,#F0FAFF);display:flex;align-items:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,173,231,.08),transparent 70%)}
+    .hero-in{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .h-badge{margin-bottom:24px}
+    .h-title{margin-bottom:24px;color:var(--g900)}
+    .hl{color:var(--blue)}
+    .h-desc{margin-bottom:40px}
+    .h-acts{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:56px}
+    .h-stats{display:flex;gap:40px;flex-wrap:wrap}
+    .st-n{font-size:34px;font-weight:900;color:var(--g900);line-height:1}
+    .st-l{font-size:13px;color:var(--g600);margin-top:4px}
+    .h-vis{position:relative;z-index:1}
+    .h-card{background:linear-gradient(135deg,var(--blue-light),#E0F4FD);border-radius:24px;box-shadow:var(--shl);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+    .h-illus{display:flex;flex-direction:column;align-items:center;gap:28px;padding:48px}
+    .i-circ{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-deep));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,173,231,.35)}
+    .i-circ svg{width:52px;height:52px;fill:#fff}
+    .i-bars{display:flex;gap:10px;align-items:flex-end}
+    .i-bar{width:26px;border-radius:5px 5px 0 0;background:var(--blue)}
+    .i-bar:nth-child(1){height:36px;opacity:.35}
+    .i-bar:nth-child(2){height:60px;opacity:.6}
+    .i-bar:nth-child(3){height:46px;opacity:.8}
+    .i-bar:nth-child(4){height:80px}
+    .f-badge{position:absolute;background:#fff;border-radius:14px;padding:12px 18px;box-shadow:0 4px 20px rgba(0,0,0,.1);display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--g800)}
+    .f-dot{width:10px;height:10px;border-radius:50%}
+    .fb1{top:-20px;left:-30px}
+    .fb2{bottom:30px;right:-30px}
+    .dg{background:#22C55E}
+    .db{background:var(--blue)}
+
+    /* TRUST */
+    .trust{background:var(--g900);padding:20px 0;overflow:hidden}
+    .trust-in{display:flex;align-items:center;gap:48px;animation:mq 22s linear infinite;white-space:nowrap;width:max-content}
+    .t-item{display:flex;align-items:center;gap:10px;color:var(--g400);font-size:14px;font-weight:500;flex-shrink:0}
+    .t-item svg{width:18px;height:18px;fill:var(--blue)}
+    @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* WHY */
+    .why{background:#fff}
+    .w-hd{text-align:center;margin-bottom:64px}
+    .w-hd .h2{margin:12px 0 16px}
+    .w-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .w-card{background:#fff;border-radius:var(--r);border:1px solid var(--g200);padding:36px 32px;transition:var(--tr);position:relative;overflow:hidden}
+    .w-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--blue-mid));opacity:0;transition:var(--tr)}
+    .w-card:hover{box-shadow:var(--sh);border-color:var(--blue-mid);transform:translateY(-4px)}
+    .w-card:hover::before{opacity:1}
+    .w-num{width:64px;height:64px;border-radius:var(--rs);background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--blue);margin-bottom:24px}
+    .w-card .h3{margin-bottom:12px}
+    .w-card p{color:var(--g600);line-height:1.75;font-size:15px}
+
+    /* COURSES */
+    .courses{background:var(--blue-light)}
+    .c-hd{text-align:center;margin-bottom:56px}
+    .c-hd .h2{margin:12px 0 16px}
+    .c-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
+    .c-card{background:#fff;border-radius:var(--r);overflow:hidden;transition:var(--tr);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+    .c-card:hover{transform:translateY(-6px);box-shadow:var(--shl)}
+    .c-thumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;display:block;background:var(--g100)}
+    .c-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}
+    .c-card:hover .c-thumb img{transform:scale(1.06)}
+    .c-body{padding:24px}
+    .c-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--blue);background:var(--blue-light);padding:3px 10px;border-radius:100px;margin-bottom:12px}
+    .c-body .h3{margin-bottom:8px;font-size:17px}
+    .c-body p{font-size:14px;color:var(--g600);line-height:1.6;margin-bottom:20px}
+    .c-foot{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--g200)}
+    .c-lvl{font-size:13px;color:var(--g400);font-weight:500}
+    .c-btn{background:var(--blue);color:#fff;padding:8px 18px;border-radius:100px;font-size:13px;font-weight:600;transition:var(--tr)}
+    .c-btn:hover{opacity:.85}
+    .c-cta{text-align:center}
+
+    /* HOW */
+    .how{background:#fff}
+    .ho-hd{text-align:center;margin-bottom:64px}
+    .ho-hd .h2{margin:12px 0 16px}
+    .ho-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative}
+    .ho-steps::before{content:'';position:absolute;top:40px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--blue),var(--blue-mid));opacity:.2;z-index:0}
+    .ho-step{text-align:center;position:relative;z-index:1}
+    .s-ico{width:80px;height:80px;border-radius:50%;background:var(--blue-light);border:3px solid var(--blue-mid);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transition:var(--tr);position:relative}
+    .s-ico svg{width:36px;height:36px;fill:var(--blue);transition:var(--tr)}
+    .ho-step:hover .s-ico{background:var(--blue);border-color:var(--blue)}
+    .ho-step:hover .s-ico svg{fill:#fff}
+    .s-num{position:absolute;top:-6px;right:calc(50% - 52px);width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+    .ho-step .h4{margin-bottom:8px}
+    .ho-step p{font-size:14px;color:var(--g600)}
+
+    /* ABOUT */
+    .about{background:var(--g50)}
+    .ab-in{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .ab-vis{position:relative}
+    .ab-img{border-radius:24px;overflow:hidden;background:linear-gradient(135deg,var(--blue-light),var(--blue-mid));aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+    .ab-illus{padding:40px;text-align:center}
+    .ab-ico{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-deep));display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 8px 32px rgba(0,173,231,.3)}
+    .ab-ico svg{width:48px;height:48px;fill:#fff}
+    .ab-illus p{color:var(--g600);font-size:15px;line-height:1.7}
+    .ab-fc{position:absolute;bottom:-24px;right:-24px;background:#fff;border-radius:var(--r);padding:20px 24px;box-shadow:var(--shl);min-width:200px}
+    .fc-n{font-size:36px;font-weight:900;color:var(--blue);line-height:1}
+    .fc-l{font-size:13px;color:var(--g600);margin-top:4px}
+    .ab-con .badge{margin-bottom:20px}
+    .ab-con .h2{margin-bottom:20px}
+    .ab-con .lead{margin-bottom:32px}
+    .fl{display:flex;flex-direction:column;gap:16px;margin-bottom:36px}
+    .fi{display:flex;align-items:flex-start;gap:14px}
+    .f-ico{width:40px;height:40px;border-radius:10px;background:var(--blue-light);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px}
+    .f-ico svg{width:20px;height:20px;fill:var(--blue)}
+    .ft .h4{margin-bottom:4px}
+    .ft p{font-size:14px;color:var(--g600)}
+    .ab-acts{display:flex;gap:16px;flex-wrap:wrap}
+
+    /* STATS */
+    .stats{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;padding:80px 0}
+    .st-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+    .st-n2{font-size:52px;font-weight:900;line-height:1;margin-bottom:8px}
+    .st-l2{font-size:14px;opacity:.85}
+
+    /* TESTI */
+    .testi{background:var(--g900);color:#fff}
+    .t-hd{text-align:center;margin-bottom:56px}
+    .t-hd .badge{background:rgba(0,173,231,.2);color:var(--blue-mid)}
+    .t-hd .h2{color:#fff;margin:12px 0 16px}
+    .t-hd p{color:var(--g400)}
+    .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .t-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:32px;transition:var(--tr)}
+    .t-card:hover{background:rgba(0,173,231,.1);border-color:rgba(0,173,231,.3)}
+    .t-stars{display:flex;gap:4px;margin-bottom:16px}
+    .t-stars span{color:#FCD34D;font-size:18px}
+    .t-q{font-size:15px;color:#CBD5E1;line-height:1.75;margin-bottom:24px}
+    .t-auth{display:flex;align-items:center;gap:14px}
+    .t-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-deep));display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0}
+    .t-nm{font-weight:600;font-size:15px;color:#fff}
+    .t-rl{font-size:13px;color:var(--g400)}
+
+    /* FAQ */
+    .faq{background:#fff}
+    .fq-hd{text-align:center;margin-bottom:56px}
+    .fq-hd .h2{margin:12px 0}
+    .fq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+    .fq-item{border:1px solid var(--g200);border-radius:var(--r);overflow:hidden;transition:var(--tr)}
+    .fq-item.op{border-color:var(--blue-mid);box-shadow:0 4px 16px rgba(0,173,231,.08)}
+    .fq-q{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;font-weight:600;font-size:15px;user-select:none}
+    .fq-ic{width:28px;height:28px;border-radius:50%;background:var(--blue-light);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+    .fq-ic svg{width:14px;height:14px;fill:var(--blue);transition:var(--tr)}
+    .fq-item.op .fq-ic{background:var(--blue)}
+    .fq-item.op .fq-ic svg{fill:#fff;transform:rotate(180deg)}
+    .fq-a{padding:0 24px;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
+    .fq-item.op .fq-a{max-height:300px;padding:0 24px 20px}
+    .fq-a p{color:var(--g600);font-size:15px;line-height:1.75}
+
+    /* CONTACT */
+    .contact{background:var(--blue-light)}
+    .co-in{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+    .co-inf .h2{margin:12px 0 20px}
+    .co-inf .lead{margin-bottom:36px}
+    .co-dets{display:flex;flex-direction:column;gap:20px}
+    .co-item{display:flex;align-items:flex-start;gap:16px}
+    .co-ico{width:44px;height:44px;border-radius:12px;background:var(--blue);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+    .co-ico svg{width:20px;height:20px;fill:#fff}
+    .d-ttl{font-weight:600;font-size:12px;color:var(--g400);margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em}
+    .d-val{font-weight:600;color:var(--g800);font-size:15px}
+    .co-form{background:#fff;border-radius:24px;padding:40px;box-shadow:var(--shl)}
+    .co-form h3{font-size:22px;font-weight:700;margin-bottom:28px}
+    .fg{margin-bottom:20px}
+    .fr{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    label{display:block;font-size:12px;font-weight:600;color:var(--g600);margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase}
+    input,textarea,select{width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid var(--g200);background:var(--g50);font-family:var(--font);font-size:15px;color:var(--g800);transition:var(--tr);outline:none}
+    input:focus,textarea:focus,select:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(0,173,231,.1)}
+    textarea{resize:vertical;min-height:100px}
+    .fsub{width:100%;padding:16px;border-radius:100px;background:var(--blue);color:#fff;font-size:16px;font-weight:700;transition:var(--tr);box-shadow:0 4px 16px rgba(0,173,231,.35)}
+    .fsub:hover{background:var(--blue-deep);transform:translateY(-1px)}
+
+    /* CTA */
+    .cta{background:linear-gradient(135deg,var(--g900),#1a2a4a);padding:80px 0;text-align:center}
+    .cta .badge{background:rgba(0,173,231,.2);color:var(--blue-mid)}
+    .cta .h2{color:#fff;margin:20px 0 16px}
+    .cta p{color:var(--g400);font-size:17px;margin-bottom:36px;max-width:540px;margin-left:auto;margin-right:auto}
+    .cta-acts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+    /* FOOTER */
+    .foot{background:var(--g900);color:var(--g400);padding:64px 0 0}
+    .fo-in{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .fo-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:18px;font-weight:800;color:#fff}
+    .fl-ico{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--blue-deep));display:flex;align-items:center;justify-content:center}
+    .fl-ico svg{width:18px;height:18px;fill:#fff}
+    .fo-br p{font-size:14px;line-height:1.7;margin-bottom:24px}
+    .fo-soc{display:flex;gap:10px}
+    .sb{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:var(--tr);cursor:pointer}
+    .sb:hover{background:var(--blue);border-color:var(--blue)}
+    .sb svg{width:16px;height:16px;fill:var(--g400);transition:var(--tr)}
+    .sb:hover svg{fill:#fff}
+    .fo-col h4{color:#fff;font-weight:700;font-size:15px;margin-bottom:20px}
+    .fo-lk{display:flex;flex-direction:column;gap:10px}
+    .fo-lk a{font-size:14px;color:var(--g400);transition:var(--tr)}
+    .fo-lk a:hover{color:var(--blue);padding-left:4px}
+    .fo-bt{border-top:1px solid rgba(255,255,255,.08);padding:24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px}
+
+    /* BTT */
+    #btt{position:fixed;bottom:24px;right:24px;z-index:999;width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;border:none;box-shadow:0 4px 16px rgba(0,173,231,.4);display:none;align-items:center;justify-content:center;cursor:pointer;transition:var(--tr)}
+    #btt.sh{display:flex}
+    #btt:hover{background:var(--blue-deep);transform:translateY(-2px)}
+    #btt svg{width:20px;height:20px;fill:#fff}
+
+    /* ANIM */
+    .fi-n{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+    .fi-n.vis{opacity:1;transform:translateY(0)}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      .hero-in{grid-template-columns:1fr}
+      .h-vis{display:none}
+      .ab-in{grid-template-columns:1fr}
+      .ab-img,.ab-fc{display:none}
+      .fo-in{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:768px){
+      .sec{padding:64px 0}
+      .n-links,.n-cta{display:none}
+      .ham{display:flex}
+      .w-grid,.c-grid,.t-grid{grid-template-columns:1fr}
+      .ho-steps{grid-template-columns:1fr 1fr}
+      .ho-steps::before{display:none}
+      .st-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+      .co-in{grid-template-columns:1fr;gap:40px}
+      .fo-in{grid-template-columns:1fr}
+      .fo-bt{flex-direction:column;text-align:center}
+      .fr{grid-template-columns:1fr}
+      .cta-acts{flex-direction:column;align-items:center}
+      .h-acts{flex-direction:column}
+    }
+    @media(max-width:480px){.ho-steps{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-i">
+      <a href="#home" class="n-logo">
+        <img src="images/logo.png" alt="Innovic Solutions" style="height:42px;width:auto;display:block;" />
+      </a>
+      <ul class="n-links">
+        <li><a href="#home"  class="n-link act">Home</a></li>
+        <li><a href="#about" class="n-link">About Us</a></li>
+        <li><a href="#courses" class="n-link">Courses</a></li>
+        <li><a href="#testi" class="n-link">Testimonials</a></li>
+        <li><a href="#contact" class="n-link">Contact</a></li>
+      </ul>
+      <a href="login.html" class="n-cta">Portal Login</a>
+      <button class="ham" id="ham" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+    <div class="m-menu" id="mm">
+      <a href="#home">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#courses">Courses</a>
+      <a href="#testi">Testimonials</a>
+      <a href="#contact">Contact Us</a>
+      <a href="login.html" class="btn btn-p" style="margin-top:8px;justify-content:center;">Portal Login</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-in">
+      <div class="hero-content">
+        <div class="h-badge fi-n"><span class="badge">★ Belagavi's Premier SAP Training Institute</span></div>
+        <h1 class="h1 h-title fi-n">Build Skills.<br>Get Hired.<br><span class="hl">Lead with SAP.</span></h1>
+        <p class="lead h-desc fi-n">Innovic Solutions is a professional training institute focused on delivering industry-ready SAP certification programs. Expert-led training, real-time project exposure, and career-focused guidance — from beginner to job-ready professional.</p>
+        <div class="h-acts fi-n">
+          <a href="#courses" class="btn btn-p">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            Explore Courses
+          </a>
+          <a href="#contact" class="btn btn-o">Book a Free Demo</a>
+        </div>
+        <div class="h-stats fi-n">
+          <div><div class="st-n">100%</div><div class="st-l">Placement Support</div></div>
+          <div><div class="st-n">10+</div><div class="st-l">SAP Modules</div></div>
+          <div><div class="st-n">500+</div><div class="st-l">Students Trained</div></div>
+        </div>
+      </div>
+      <div class="h-vis fi-n">
+        <div style="position:relative">
+          <div class="h-card" style="background:none;padding:0;">
+            <img src="images/hero_training.jpg" alt="SAP Training Session at Innovic Solutions" style="width:100%;height:100%;object-fit:cover;border-radius:24px;display:block;" loading="eager"/>
+          </div>
+          <div class="f-badge fb1"><div class="f-dot dg"></div> Classes Live Now</div>
+          <div class="f-badge fb2"><div class="f-dot db"></div> Certified Trainers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="trust-in">
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>SAP Certified Programs</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Real-Time Project Training</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>100% Placement Guarantee</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Flexible Batch Timings</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>Live Interactive Sessions</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Study Materials Included</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>SAP Certified Programs</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Real-Time Project Training</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>100% Placement Guarantee</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>Flexible Batch Timings</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>Live Interactive Sessions</div>
+    <div class="t-item"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Study Materials Included</div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section class="sec why" id="why">
+  <div class="container">
+    <div class="w-hd fi-n">
+      <span class="badge">Quality Learning Experience</span>
+      <h2 class="h2">Why Choose Innovic Solutions?</h2>
+      <p class="lead" style="max-width:580px;margin:0 auto">We combine industry expertise with hands-on training to give you a genuine competitive edge in the SAP job market.</p>
+    </div>
+    <div class="w-grid">
+      <div class="w-card fi-n"><div class="w-num">01</div><h3 class="h3">Industry Specialists</h3><p>High-quality training delivered by real-world SAP professionals. Hands-on experience on real-time projects and live servers for practical learning and deep industry understanding.</p></div>
+      <div class="w-card fi-n"><div class="w-num">02</div><h3 class="h3">Practical Training</h3><p>Project-based training approach where trainees work on real-world projects to understand the applications of theoretical concepts — mirroring actual industry challenges.</p></div>
+      <div class="w-card fi-n"><div class="w-num">03</div><h3 class="h3">100% Placement Guarantee</h3><p>Dedicated placement support with direct connections to top recruiters across India. Our strong industry network ensures every student gets the career opportunity they deserve.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="sec courses" id="courses">
+  <div class="container">
+    <div class="c-hd fi-n">
+      <span class="badge">Our Programs</span>
+      <h2 class="h2">SAP Certification Courses</h2>
+      <p class="lead" style="max-width:520px;margin:0 auto">Industry-aligned SAP modules taught by certified professionals with real-world experience.</p>
+    </div>
+    <div class="c-grid">
+
+      <div class="c-card fi-n">
+        <div class="c-thumb"><img src="images/course_fico.jpg" alt="SAP FICO Financial Accounting Course" loading="lazy" /></div>
+        <div class="c-body"><span class="c-tag">Finance</span><h3 class="h3">SAP FICO</h3><p>Master Financial Accounting &amp; Controlling. Covers G/L, Accounts Payable &amp; Receivable, Asset Accounting, Cost Centers, and more.</p><div class="c-foot"><span class="c-lvl">Beginner to Advanced</span><a href="https://www.innovicsolutions.in/courses" class="c-btn" target="_blank" rel="noopener">Enroll Now</a></div></div>
+      </div>
+
+      <div class="c-card fi-n">
+        <div class="c-thumb"><img src="images/course_hcm.jpg" alt="SAP HCM HR Management Course" loading="lazy" /></div>
+        <div class="c-body"><span class="c-tag" style="color:#16A34A;background:#F0FFF4">HR</span><h3 class="h3">SAP HCM / HR</h3><p>Comprehensive Human Capital Management covering Personnel Administration, Payroll, Time Management, and Organizational Management.</p><div class="c-foot"><span class="c-lvl">Beginner to Advanced</span><a href="https://www.innovicsolutions.in/courses" class="c-btn" style="background:#16A34A" target="_blank" rel="noopener">Enroll Now</a></div></div>
+      </div>
+
+      <div class="c-card fi-n">
+        <div class="c-thumb"><img src="images/course_mmsd.jpg" alt="SAP MM SD Supply Chain Course" loading="lazy" /></div>
+        <div class="c-body"><span class="c-tag" style="color:#EA580C;background:#FFF7ED">Supply Chain</span><h3 class="h3">SAP MM / SD</h3><p>Materials Management &amp; Sales Distribution end-to-end. Covers Procurement, Inventory, Order Management, Billing, Pricing, and Logistics.</p><div class="c-foot"><span class="c-lvl">Beginner to Advanced</span><a href="https://www.innovicsolutions.in/courses" class="c-btn" style="background:#EA580C" target="_blank" rel="noopener">Enroll Now</a></div></div>
+      </div>
+
+      <div class="c-card fi-n">
+        <div class="c-thumb"><img src="images/course_basis.jpg" alt="SAP BASIS System Administration Course" loading="lazy" /></div>
+        <div class="c-body"><span class="c-tag" style="color:#7C3AED;background:#F5F3FF">System Admin</span><h3 class="h3">SAP BASIS</h3><p>System administration, client management, transport system, user administration, performance tuning, and SAP landscape architecture.</p><div class="c-foot"><span class="c-lvl">Intermediate</span><a href="https://www.innovicsolutions.in/courses" class="c-btn" style="background:#7C3AED" target="_blank" rel="noopener">Enroll Now</a></div></div>
+      </div>
+
+      <div class="c-card fi-n">
+        <div class="c-thumb"><img src="images/course_ppqm.jpg" alt="SAP PP QM Production Planning Course" loading="lazy" /></div>
+        <div class="c-body"><span class="c-tag" style="color:#DB2777;background:#FDF2F8">Production</span><h3 class="h3">SAP PP / QM</h3><p>Production Planning and Quality Management — MRP, capacity planning, quality notifications, inspection lots, and process industry configuration.</p><div class="c-foot"><span class="c-lvl">Beginner to Advanced</span><a href="https://www.innovicsolutions.in/courses" class="c-btn" style="background:#DB2777" target="_blank" rel="noopener">Enroll Now</a></div></div>
+      </div>
+
+      <div class="c-card fi-n">
+        <div class="c-thumb"><img src="images/course_s4hana.jpg" alt="SAP S/4HANA Next-Gen ERP Course" loading="lazy" /></div>
+        <div class="c-body"><span class="c-tag" style="color:#059669;background:#ECFDF5">Analytics</span><h3 class="h3">SAP S/4HANA</h3><p>Next-generation ERP — real-time analytics, simplified data model, Fiori UX with cloud and on-premise deployment training.</p><div class="c-foot"><span class="c-lvl">Advanced</span><a href="https://www.innovicsolutions.in/courses" class="c-btn" style="background:#059669" target="_blank" rel="noopener">Enroll Now</a></div></div>
+      </div>
+
+    </div>
+    <div class="c-cta fi-n">
+      <a href="https://www.innovicsolutions.in/courses" class="btn btn-p" target="_blank" rel="noopener">View All Courses <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- SAP DASHBOARD BANNER -->
+<div style="background:#F0FAFF;padding:0;overflow:hidden;position:relative;max-height:460px;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;">
+  <img src="images/sap_dashboard_light.jpg?v=3" alt="SAP Fiori Financial Dashboard India Region with Indian Rupee in Daylight Office" style="width:100%;height:460px;object-fit:cover;object-position:center 35%;opacity:1;display:block;" loading="eager"/>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0.96) 0%,rgba(255,255,255,0.85) 38%,rgba(255,255,255,0.2) 70%,transparent 100%);display:flex;align-items:center;padding:0 5%;">
+    <div style="max-width:520px;">
+      <span style="display:inline-block;color:#0086C9;background:#E8F7FD;border:1px solid rgba(0,173,231,0.25);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:14px;">Live SAP System Training</span>
+      <h2 style="color:#0F172A;font-size:clamp(24px,3vw,38px);font-weight:800;line-height:1.2;margin-bottom:14px;">Practice on Real SAP Environments — <span style="color:#00ADE7;">Not Just Theory</span></h2>
+      <p style="color:#475569;font-size:15.5px;line-height:1.7;margin-bottom:26px;">Every student gets hands-on access to live SAP servers and real-world Indian &amp; Global ERP financial scenarios from day one.</p>
+      <a href="#contact" class="btn btn-p" style="background:#00ADE7;color:#fff;">Book a Demo Class</a>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="sec how">
+  <div class="container">
+    <div class="ho-hd fi-n">
+      <span class="badge">Our Process</span>
+      <h2 class="h2">How It Works</h2>
+      <p class="lead" style="max-width:500px;margin:0 auto">A clear, structured path from enrollment to your first SAP role.</p>
+    </div>
+    <div class="ho-steps">
+      <div class="ho-step fi-n"><div class="s-ico"><div class="s-num">1</div><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div><h4 class="h4">Enroll</h4><p>Choose your SAP module and register online or visit our Belgaum center.</p></div>
+      <div class="ho-step fi-n"><div class="s-ico"><div class="s-num">2</div><svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div><h4 class="h4">Learn</h4><p>Expert-led live sessions with hands-on practice on real SAP systems.</p></div>
+      <div class="ho-step fi-n"><div class="s-ico"><div class="s-num">3</div><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg></div><h4 class="h4">Project Work</h4><p>Real-world SAP projects to build your portfolio and prove job-readiness.</p></div>
+      <div class="ho-step fi-n"><div class="s-ico"><div class="s-num">4</div><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><h4 class="h4">Get Placed</h4><p>Our team connects you with top SAP employers and guides your interviews.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec about" id="about">
+  <div class="container">
+    <div class="ab-in">
+      <div class="ab-vis fi-n">
+        <div class="ab-img" style="background:none;padding:0;overflow:hidden;">
+          <img src="images/placement.jpg" alt="Successful student placement at Innovic Solutions" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>
+        </div>
+        <div class="ab-fc"><div class="fc-n">500+</div><div class="fc-l">Students placed in top companies</div></div>
+      </div>
+      <div class="ab-con fi-n">
+        <span class="badge">About Innovic Solutions</span>
+        <h2 class="h2">Your Gateway to a SAP Career</h2>
+        <p class="lead">Innovic Solutions is a professional training institute focused on delivering industry-ready SAP certification programs. With expert-led training, real-time project exposure, and career-focused guidance, we help learners transition from beginners to job-ready professionals.</p>
+        <div class="fl">
+          <div class="fi"><div class="f-ico"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div><div class="ft"><h4 class="h4">Live SAP System Access</h4><p>Practice on real SAP landscapes — not just slides and theory.</p></div></div>
+          <div class="fi"><div class="f-ico"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div><div class="ft"><h4 class="h4">Small Batch Sizes</h4><p>Personalized attention with limited seats per batch for maximum learning.</p></div></div>
+          <div class="fi"><div class="f-ico"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div><div class="ft"><h4 class="h4">Interview &amp; Exam Preparation</h4><p>Mock interviews, resume building, and SAP certification exam coaching.</p></div></div>
+        </div>
+        <div class="ab-acts"><a href="#courses" class="btn btn-p">View Our Courses</a><a href="#contact" class="btn btn-o">Contact Us</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="st-grid">
+      <div class="fi-n"><div class="st-n2">500+</div><div class="st-l2">Students Trained</div></div>
+      <div class="fi-n"><div class="st-n2">100%</div><div class="st-l2">Placement Support</div></div>
+      <div class="fi-n"><div class="st-n2">10+</div><div class="st-l2">SAP Modules Offered</div></div>
+      <div class="fi-n"><div class="st-n2">5+</div><div class="st-l2">Years of Excellence</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec testi" id="testi">
+  <div class="container">
+    <div class="t-hd fi-n">
+      <span class="badge">Student Success</span>
+      <h2 class="h2">What Our Students Say</h2>
+      <p>Real stories from people who transformed their careers with Innovic Solutions.</p>
+      <div style="margin-top:32px;border-radius:20px;overflow:hidden;max-height:380px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
+        <img src="images/students_innovic.jpg?v=2" alt="Innovic Solutions SAP students celebrating with certificates" style="width:100%;height:380px;object-fit:cover;object-position:center 20%;display:block;" loading="eager"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,23,42,0.65) 0%,transparent 50%);"></div>
+        <p style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#fff;font-weight:700;font-size:15px;white-space:nowrap;letter-spacing:0.02em;">🎓 500+ Innovic Graduates — Placed &amp; Leading with SAP</p>
+      </div>
+    </div>
+    <div class="t-grid">
+      <div class="t-card fi-n">
+        <div class="t-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-q">"The SAP FICO training at Innovic Solutions was exceptional. The trainers had real corporate experience and hands-on project work made concepts crystal clear. Got placed within 2 months!"</p>
+        <div class="t-auth"><div class="t-av">AR</div><div><div class="t-nm">Aditya R.</div><div class="t-rl">SAP FICO Consultant, Pune</div></div></div>
+      </div>
+      <div class="t-card fi-n">
+        <div class="t-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-q">"I was a commerce graduate with no IT background. Innovic's structured SAP HCM course and dedicated placement support helped me land a job at a top MNC. Best decision of my life!"</p>
+        <div class="t-auth"><div class="t-av">PK</div><div><div class="t-nm">Priya K.</div><div class="t-rl">SAP HR Analyst, Bangalore</div></div></div>
+      </div>
+      <div class="t-card fi-n">
+        <div class="t-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="t-q">"The live SAP server access and real-time project experience set Innovic apart from every other training center. Small batches meant individual attention throughout the program."</p>
+        <div class="t-auth"><div class="t-av">SM</div><div><div class="t-nm">Suresh M.</div><div class="t-rl">SAP MM Consultant, Hyderabad</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec faq">
+  <div class="container">
+    <div class="fq-hd fi-n"><span class="badge">FAQs</span><h2 class="h2">Frequently Asked Questions</h2></div>
+    <div class="fq-list">
+      <div class="fq-item op fi-n"><div class="fq-q">What is the duration of SAP courses?<div class="fq-ic"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div><div class="fq-a"><p>Course duration varies by module. Most programs are 45–90 days with weekday and weekend batch options to suit working professionals and fresh graduates.</p></div></div>
+      <div class="fq-item fi-n"><div class="fq-q">Do I need prior IT experience?<div class="fq-ic"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div><div class="fq-a"><p>No prior IT experience is needed. Courses are designed for beginners. Basic computer knowledge and logical thinking are sufficient — trainers guide you from fundamentals to advanced levels.</p></div></div>
+      <div class="fq-item fi-n"><div class="fq-q">How does the 100% Placement Guarantee work?<div class="fq-ic"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div><div class="fq-a"><p>Our placement team maintains relationships with top SAP employers, provides resume building, mock interviews, and direct referrals — supporting you until you receive a job offer.</p></div></div>
+      <div class="fq-item fi-n"><div class="fq-q">Is online training available?<div class="fq-ic"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div><div class="fq-a"><p>Yes! We offer both in-person classroom training at our Belgaum center and online live sessions. Contact us at +91 98867 78997 for current batch schedules.</p></div></div>
+      <div class="fq-item fi-n"><div class="fq-q">Will I receive a certificate after completion?<div class="fq-ic"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div><div class="fq-a"><p>Yes. On successfully completing the course and project, you will receive an Innovic Solutions certificate. We also guide you through official SAP certification exam preparation.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec contact" id="contact">
+  <div class="container">
+    <div class="co-in">
+      <div class="co-inf fi-n">
+        <span class="badge">Get In Touch</span>
+        <h2 class="h2">Start Your SAP Journey Today</h2>
+        <p class="lead">Reach out for course inquiries, batch schedules, or to book a free demo class. Our team is ready to guide you.</p>
+        <div class="co-dets">
+          <div class="co-item"><div class="co-ico"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg></div><div><div class="d-ttl">Address</div><div class="d-val">Atharv Arcade 2nd Floor, Above Goaves Diagnostic Centre, Beside LIC Office, Khanapur Road, Tilakwadi – 590006</div></div></div>
+          <div class="co-item"><div class="co-ico"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div><div class="d-ttl">Phone</div><div class="d-val"><a href="tel:+919886778997" style="color:inherit">+91 98867 78997</a></div></div></div>
+          <div class="co-item"><div class="co-ico"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div><div><div class="d-ttl">Instagram</div><div class="d-val"><a href="https://www.instagram.com/innovic_solutions_official/" target="_blank" rel="noopener" style="color:var(--blue)">@innovic_solutions_official</a></div></div></div>
+        </div>
+      </div>
+      <div class="co-form fi-n">
+        <h3>Book a Free Demo Class</h3>
+        <form onsubmit="hSub(event)">
+          <div class="fr"><div class="fg"><label for="fn">First Name</label><input type="text" id="fn" placeholder="John" required/></div><div class="fg"><label for="ln">Last Name</label><input type="text" id="ln" placeholder="Doe" required/></div></div>
+          <div class="fg"><label for="em">Email</label><input type="email" id="em" placeholder="john@example.com" required/></div>
+          <div class="fg"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="+91 98765 43210"/></div>
+          <div class="fg"><label for="cr">Interested In</label><select id="cr"><option value="">Select a SAP Module</option><option>SAP FICO</option><option>SAP HCM / HR</option><option>SAP MM / SD</option><option>SAP BASIS</option><option>SAP PP / QM</option><option>SAP S/4HANA</option><option>Not Sure Yet</option></select></div>
+          <div class="fg"><label for="mg">Message</label><textarea id="mg" placeholder="Tell us about your background or any questions..."></textarea></div>
+          <button type="submit" class="fsub">Book My Free Demo →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <span class="badge">Limited Seats Available</span>
+    <h2 class="h2">Ready to Transform Your Career?</h2>
+    <p>Join hundreds of successful SAP professionals who launched their careers with Innovic Solutions. New batches starting soon.</p>
+    <div class="cta-acts">
+      <a href="#contact" class="btn btn-p" style="padding:16px 36px;font-size:16px">Get Started Today</a>
+      <a href="tel:+919886778997" class="btn btn-w" style="padding:16px 36px;font-size:16px">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        +91 98867 78997
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="container">
+    <div class="fo-in">
+      <div class="fo-br">
+        <div class="fo-logo" style="margin-bottom:18px;">
+          <div style="background:white;padding:6px 14px;border-radius:10px;display:inline-flex;align-items:center;">
+            <img src="images/logo.png" alt="Innovic Solutions" style="height:32px;width:auto;display:block;" />
+          </div>
+        </div>
+        <p>A premier SAP training institute delivering industry-ready certification programs. Build skills, get hired, and lead with SAP.</p>
+        <div class="fo-soc">
+          <a class="sb" href="https://www.instagram.com/innovic_solutions_official/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+          <a class="sb" href="login.html" aria-label="Student Portal"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></a>
+        </div>
+      </div>
+      <div class="fo-col"><h4>Quick Links</h4><ul class="fo-lk"><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#courses">Courses</a></li><li><a href="#testi">Testimonials</a></li><li><a href="#contact">Contact Us</a></li></ul></div>
+      <div class="fo-col"><h4>SAP Courses</h4><ul class="fo-lk"><li><a href="https://www.innovicsolutions.in/courses" target="_blank" rel="noopener">SAP FICO</a></li><li><a href="https://www.innovicsolutions.in/courses" target="_blank" rel="noopener">SAP HCM / HR</a></li><li><a href="https://www.innovicsolutions.in/courses" target="_blank" rel="noopener">SAP MM / SD</a></li><li><a href="https://www.innovicsolutions.in/courses" target="_blank" rel="noopener">SAP BASIS</a></li><li><a href="https://www.innovicsolutions.in/courses" target="_blank" rel="noopener">SAP PP / QM</a></li><li><a href="https://www.innovicsolutions.in/courses" target="_blank" rel="noopener">SAP S/4HANA</a></li></ul></div>
+      <div class="fo-col"><h4>Contact</h4><ul class="fo-lk" style="gap:14px"><li style="color:var(--g400);font-size:14px;line-height:1.6">Atharv Arcade 2nd Floor, Khanapur Road, Tilakwadi – 590006</li><li><a href="tel:+919886778997">+91 98867 78997</a></li><li><a href="https://www.instagram.com/innovic_solutions_official/" target="_blank" rel="noopener">@innovic_solutions_official</a></li><li><a href="login.html">Management Portal Login →</a></li></ul></div>
+    </div>
+    <div class="fo-bt"><span>© 2025 Innovic Solutions. All rights reserved.</span><span>Designed for SAP learners across India ❤️</span></div>
+  </div>
+</footer>
+
+<button id="btt" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></button>
+
+<script>
+  const nav=document.getElementById('nav'),btt=document.getElementById('btt');
+  window.addEventListener('scroll',()=>{nav.classList.toggle('sc',scrollY>20);btt.classList.toggle('sh',scrollY>400)},{passive:true});
+  const ham=document.getElementById('ham'),mm=document.getElementById('mm');
+  ham.addEventListener('click',()=>{const o=mm.classList.toggle('op');ham.classList.toggle('op',o);ham.setAttribute('aria-expanded',o)});
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mm.classList.remove('op');ham.classList.remove('op');ham.setAttribute('aria-expanded','false')}));
+  const nls=document.querySelectorAll('.n-link');
+  new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){nls.forEach(l=>l.classList.remove('act'));const m=document.querySelector('.n-link[href="#'+e.target.id+'"]');if(m)m.classList.add('act')}})},{threshold:.3}).observe(document.getElementById('home'));
+  ['about','courses','testi','contact'].forEach(id=>{const el=document.getElementById(id);if(el)new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){nls.forEach(l=>l.classList.remove('act'));const m=document.querySelector('.n-link[href="#'+id+'"]');if(m)m.classList.add('act')}})},{threshold:.3}).observe(el)});
+  const fo=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){e.target.style.transitionDelay=i%3*80+'ms';e.target.classList.add('vis');fo.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.fi-n').forEach(el=>fo.observe(el));
+  document.querySelectorAll('.fq-q').forEach(q=>{q.addEventListener('click',()=>{const it=q.closest('.fq-item'),was=it.classList.contains('op');document.querySelectorAll('.fq-item').forEach(i=>i.classList.remove('op'));if(!was)it.classList.add('op')})});
+  btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+  function hSub(e){e.preventDefault();const b=e.target.querySelector('.fsub');b.textContent='✓ Submitted! We\'ll contact you soon.';b.style.background='#16A34A';b.disabled=true;setTimeout(()=>{b.textContent='Book My Free Demo →';b.style.background='';b.disabled=false;e.target.reset()},4000)}
+</script>
+</body>
+</html>
